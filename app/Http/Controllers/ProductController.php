@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Services\ProductService;
@@ -26,19 +27,24 @@ class ProductController extends Controller
         return view('create');
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $product = $this->productService->store($request);
         return view('store', compact('product'));
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $product = $this->productService->edit($id);
+        $validatedData = validator(['id' => $id], [
+            'id' => 'required|integer|exists:products,id',
+        ])->validate();
+
+        $product = $this->productService->edit($validatedData['id']);
         return view('edit', compact('product'));
     }
 
-    public function update(Request $request, $id)
+
+    public function update(ProductRequest $request, $id)
     {
         $product = $this->productService->update($request, $id);
         return view('store', compact('product'));
@@ -46,7 +52,11 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        if ($this->productService->destroy($id)) {
+        $validatedData = validator(['id' => $id], [
+            'id' => 'required|integer|exists:products,id',
+        ])->validate();
+
+        if ($this->productService->destroy($validatedData['id'])) {
             return redirect('/product');
         }
     }

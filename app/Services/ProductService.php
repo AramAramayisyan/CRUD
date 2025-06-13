@@ -11,8 +11,8 @@ class ProductService
     {
         $newProduct = new Product();
         $newProduct->fill([
-            'name' => $request->name,
-            'description' => $request->description,
+            'name' => $request['name'],
+            'description' => $request['description'],
         ]);
         if ($newProduct->save()) {
             return $newProduct;
