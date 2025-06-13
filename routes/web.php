@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProductController;
 
-Route::get('/', [ProjectController::class, 'index'])->name('index');
-Route::resource('projects', ProjectController::class);
+Route::get('/', [ProductController::class, 'index'])->name('index');
+Route::resource('product', ProductController::class);
+Route::get('/edit{id}', [ProductController::class, 'edit'])->name('edit');

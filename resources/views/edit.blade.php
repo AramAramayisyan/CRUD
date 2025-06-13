@@ -1,35 +1,35 @@
-@extends('layouts')
+@extends('layouts/app')
 
 @section('content')
     <div class="container">
         <h1>Edit Project</h1>
 
-{{--        @if ($errors->any())--}}
+        @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
-{{--                    @foreach ($errors->all() as $error)--}}
-{{--                        <li>{{ $error }}</li>--}}
-{{--                    @endforeach--}}
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                 </ul>
             </div>
-{{--        @endif--}}
+        @endif
 
-        <form action="{{ route('projects.update', $project->id) }}" method="POST">
+        <form action="{{ route('product.update', $product->id) }}" method="POST">
             @csrf
             @method('PUT')
 
             <div class="mb-3">
                 <label for="name" class="form-label">Project Name</label>
-                <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $project->name) }}" required>
+                <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $product->name) }}" required>
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea name="description" id="description" class="form-control" rows="4">{{ old('description', $project->description) }}</textarea>
+                <textarea name="description" id="description" class="form-control" rows="4">{{ old('description', $product->description) }}</textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Update</button>
-            <a href="{{ route('projects.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('product.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 @endsection
