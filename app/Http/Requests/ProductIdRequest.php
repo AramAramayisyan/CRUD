@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductRequest extends FormRequest
+class ProductIdRequest extends FormRequest
 {
     public function authorize()
     {
@@ -13,8 +13,7 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:255'],
-            'description' => ['required', 'min:10'],
+            'id' => [ 'exists:products,id']
         ];
     }
 }
