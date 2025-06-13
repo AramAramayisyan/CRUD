@@ -1,15 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\Project;
+use App\Models\Property;
 
-class ProjectController extends Controller
+class PropertyController extends Controller
 {
     public function index()
     {
-        $projects = Project::all();
-        dd($projects);
-        return view('index', compact('projects'));
+        $properties = Property::all();
+        return view('index', compact('properties'));
     }
 
     public function create()
@@ -17,8 +16,15 @@ class ProjectController extends Controller
         return view('create');
     }
 
+    public function  edit($id)
+    {
+        dd($id);
+        
+    }
     public function store(Request $request)
     {
         return view('store');
     }
+
+
 }
