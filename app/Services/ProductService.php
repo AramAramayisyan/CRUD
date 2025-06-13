@@ -16,8 +16,6 @@ class ProductService
         ]);
         if ($newProduct->save()) {
             return $newProduct;
-        } else {
-            return false;
         }
     }
 
