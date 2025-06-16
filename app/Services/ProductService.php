@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,7 @@ class ProductService
         return DB::table('products')->where('id', $id)->first();
     }
 
-    public function update($request, $id)
+    public function update(ProductRequest $request, $id)
     {
         DB::table('products')->where('id', $id)->update([
             'name' => $request->name,

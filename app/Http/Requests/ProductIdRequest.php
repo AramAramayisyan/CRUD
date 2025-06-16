@@ -13,7 +13,7 @@ class ProductIdRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => [ 'exists:products,id']
+            'id' => ['integer', 'unique:products,id']
         ];
     }
 }

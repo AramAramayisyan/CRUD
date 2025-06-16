@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductIdRequest;
 use App\Http\Requests\ProductRequest;
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Services\ProductService;
 
@@ -40,7 +39,7 @@ class ProductController extends Controller
         return view('edit', compact('product'));
     }
 
-    public function update(ProductRequest $request, ProductIdRequest $id)
+    public function update(ProductRequest $request,  $id)
     {
         $product = $this->productService->update($request, $id);
         return view('store', compact('product'));
