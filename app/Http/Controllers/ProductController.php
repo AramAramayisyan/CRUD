@@ -46,7 +46,13 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($this->productService->destroy($product)) {
-            return redirect('/product');
+            return redirect('/products');
         }
+    }
+
+    public function toggleFeature(Product $product)
+    {
+        $this->productService->is_featured($product);
+        return redirect('/products');
     }
 }

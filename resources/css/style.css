@@ -1,0 +1,4 @@
+.table-featured td {
+    text-decoration: line-through;
+    color: gray;
+}

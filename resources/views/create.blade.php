@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('product.store') }}" method="POST">
+        <form action="{{ route('products.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -28,7 +28,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Create</button>
-            <a href="{{ route('product.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 @endsection

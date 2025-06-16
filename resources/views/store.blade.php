@@ -22,7 +22,7 @@
             No product data available.
         </div>
     @endif
-    <a href="{{ route('product.index') }}" class="btn btn-primary mt-3">Back to Product List</a>
+    <a href="{{ route('products.index') }}" class="btn btn-primary mt-3">Back to Product List</a>
 </div>
 </body>
 </html>
