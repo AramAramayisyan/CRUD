@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
-use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
@@ -20,23 +19,17 @@ class ProductService
         }
     }
 
-    public function edit($id)
+    public function update(ProductRequest $request, $product)
     {
-        return DB::table('products')->where('id', $id)->first();
-    }
-
-    public function update(ProductRequest $request, $id)
-    {
-        DB::table('products')->where('id', $id)->update([
+        $product->update([
             'name' => $request->name,
             'description' => $request->description
         ]);
-        return DB::table('products')->where('id', $id)->first();
+        return $product;
     }
 
-    public  function destroy($id)
+    public  function destroy($product)
     {
-
-        return DB::table('products')->where('id', $id)->delete();
+        return $product->delete();
     }
 }

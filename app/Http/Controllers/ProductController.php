@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductIdRequest;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Services\ProductService;
@@ -33,21 +32,20 @@ class ProductController extends Controller
         return view('store', compact('product'));
     }
 
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = $this->productService->edit($id);
         return view('edit', compact('product'));
     }
 
-    public function update(ProductRequest $request,  $id)
+    public function update(ProductRequest $request,  Product $product)
     {
-        $product = $this->productService->update($request, $id);
+        $product = $this->productService->update($request, $product);
         return view('store', compact('product'));
     }
 
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        if ($this->productService->destroy($id)) {
+        if ($this->productService->destroy($product)) {
             return redirect('/product');
         }
     }
