@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -15,10 +16,19 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('index', compact('products'));
+        $products = Product::with('type');
+        if ($request->filled('name')) {
+            $products->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+        if ($request->filled('type')) {
+            $products->where('type_id', $request->input('type'));
+        }
+        $products = $products->get();
+        $type_ids = Product::with('type')->pluck('type_id');
+        $types = ProductType::whereIn('id', $type_ids)->get();
+        return view('index', compact('products', 'types'));
     }
 
     public function create()
