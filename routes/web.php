@@ -2,5 +2,5 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
-Route::get('/', [ProductController::class, 'index'])->name('index');
-Route::resource('product', ProductController::class);
+Route::resource('products', ProductController::class);
+Route::patch('/products/{product}/toggleFeature', [ProductController::class, 'toggleFeature'])->name('products.toggleFeature');

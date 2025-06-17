@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('product.store') }}" method="POST">
+        <form action="{{ route('products.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -23,12 +23,23 @@
             </div>
 
             <div class="mb-3">
+                <label for="type" class="form-label">Type</label>
+                <select name="type" id="type" class="form-select" required>
+                    <option value="" disabled selected>Select a type</option>
+                    <option value="computer" {{ old('type') == 'computer' ? 'selected' : '' }}>Computer</option>
+                    <option value="laptop" {{ old('type') == 'laptop' ? 'selected' : '' }}>Laptop</option>
+                    <option value="phone" {{ old('type') == 'phone' ? 'selected' : '' }}>Phone</option>
+                    <option value="table" {{ old('type') == 'table' ? 'selected' : '' }}>Table</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea name="description" id="description" class="form-control" rows="4">{{ old('description') }}</textarea>
             </div>
 
             <button type="submit" class="btn btn-success">Create</button>
-            <a href="{{ route('product.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 @endsection

@@ -15,6 +15,7 @@ class ProductRequest extends FormRequest
         return [
             'name' => ['string', 'required', 'max:255'],
             'description' => ['string', 'required', 'min:10'],
+            'type' => ['required', 'in:computer,laptop,phone,table']
         ];
     }
 }

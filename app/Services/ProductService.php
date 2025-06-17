@@ -13,23 +13,32 @@ class ProductService
         $newProduct->fill([
             'name' => $request['name'],
             'description' => $request['description'],
+            'type' => $request['type'],
         ]);
         if ($newProduct->save()) {
             return $newProduct;
         }
+        return null;
     }
 
     public function update(ProductRequest $request, $product)
     {
         $product->update([
             'name' => $request->name,
-            'description' => $request->description
+            'description' => $request->description,
+            'is_featured' => $request->feature
         ]);
         return $product;
     }
 
-    public  function destroy($product)
+    public function destroy($product)
     {
         return $product->delete();
+    }
+
+    public function is_featured($product)
+    {
+        $product->is_featured = !$product->is_featured;
+        $product->save();
     }
 }

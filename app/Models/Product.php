@@ -12,5 +12,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'is_featured',
+        'type'
     ];
 }
