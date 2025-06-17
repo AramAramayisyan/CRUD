@@ -11,6 +11,7 @@ class ProductService
     {
         $newProduct = new Product();
         $newProduct->fill([
+            'type_id' => $request['type_id'],
             'name' => $request['name'],
             'description' => $request['description'],
         ]);

@@ -7,6 +7,7 @@ use App\Http\Requests\SearchProductRequest;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -17,7 +18,7 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index(SearchProductRequest $request)
+    public function index(Request $request)
     {
         $query = Product::with('type');
         if ($request->filled('name')) {
@@ -34,7 +35,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('create');
+        $types = ProductType::all();
+        return view('create', compact('types'));
     }
 
     public function store(ProductRequest $request)
