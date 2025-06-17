@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\SearchProductRequest;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Services\ProductService;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -17,7 +17,7 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index(Request $request)
+    public function index(SearchProductRequest $request)
     {
         $query = Product::with('type');
         if ($request->filled('name')) {
