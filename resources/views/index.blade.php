@@ -28,7 +28,7 @@
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description }}</td>
-                        <td>{{ $product->type }}</td>
+                        <td>{{ $product->type->name }}</td>
                         <td>
                             <form action="{{ route('products.toggleFeature', $product->id) }}" method="POST">
                                 @csrf

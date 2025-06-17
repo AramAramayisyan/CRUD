@@ -10,9 +10,14 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
+        'type_id',
         'name',
         'description',
-        'is_featured',
-        'type'
+        'is_featured'
     ];
+
+    public function type()
+    {
+        return $this->belongsTo(ProductType::class, 'type_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\ProductType;
 use App\Services\ProductService;
 
 class ProductController extends Controller
@@ -17,13 +18,14 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('type')->get();
         return view('index', compact('products'));
     }
 
     public function create()
     {
-        return view('create');
+        $types = ProductType::all();
+        return view('create',  compact('types'));
     }
 
     public function store(ProductRequest $request)

@@ -13,9 +13,9 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
+            'type_id' => ['integer', 'required', 'exists:product_types,id'],
             'name' => ['string', 'required', 'max:255'],
-            'description' => ['string', 'required', 'min:10'],
-            'type' => ['required', 'in:computer,laptop,phone,table']
+            'description' => ['string', 'required', 'min:10']
         ];
     }
 }

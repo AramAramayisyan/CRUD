@@ -24,12 +24,13 @@
 
             <div class="mb-3">
                 <label for="type" class="form-label">Type</label>
-                <select name="type" id="type" class="form-select" required>
-                    <option value="" disabled selected>Select a type</option>
-                    <option value="computer" {{ old('type') == 'computer' ? 'selected' : '' }}>Computer</option>
-                    <option value="laptop" {{ old('type') == 'laptop' ? 'selected' : '' }}>Laptop</option>
-                    <option value="phone" {{ old('type') == 'phone' ? 'selected' : '' }}>Phone</option>
-                    <option value="table" {{ old('type') == 'table' ? 'selected' : '' }}>Table</option>
+                <select name="type_id" class="form-select" required>
+                    <option value="" disabled selected>Select type</option>
+                    @foreach ($types as $type)
+                        <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>
+                            {{ $type->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
 
