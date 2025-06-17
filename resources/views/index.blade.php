@@ -16,7 +16,7 @@
                 <input type="text" name="name" class="form-control" placeholder="Search by name" value="{{ request('name') }}">
             </div>
             <div class="col-md-4">
-                <select name="type" class="form-control">
+                <select name="type_id" class="form-control">
                     <option value="">-- Select Type --</option>
                     @foreach($types as $type)
                         <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
@@ -36,6 +36,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Project Name</th>
+                    <th>Type Name</th>
                     <th>Description</th>
                     <th>Feature</th>
                     <th>Actions</th>
@@ -46,6 +47,7 @@
                     <tr class="{{ $product->is_featured ? 'table-featured' : '' }}">
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->name }}</td>
+                        <td>{{ $product->type->name }}</td>
                         <td>{{ $product->description }}</td>
                         <td>
                             <form action="{{ route('products.toggleFeature', $product->id) }}" method="POST">
