@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Services\RegistrationService;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegistrationController extends Controller
 {
@@ -17,6 +17,9 @@ class RegistrationController extends Controller
     }
     public function ShowRegistrationForm()
     {
+        if (Auth::user()) {
+            return redirect('/user');
+        }
         return view('auth.register');
     }
 
@@ -25,5 +28,4 @@ class RegistrationController extends Controller
         $newUser = $this->registrationService->register($request);
         return redirect(route('userPage'));
     }
-
 }

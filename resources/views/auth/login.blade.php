@@ -36,13 +36,11 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label class="form-check-label" for="remember">Remember Me</label>
-            </div>
-
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
+
+        <div class="text-center mt-3">
+            <p>Don't have an account? <a href="{{ route('registration') }}">Register here</a></p>
+        </div>
     </div>
 @endsection

@@ -13,8 +13,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['string', 'max:255'],
-            'type_id' => ['integer', 'exists:product_types,id'],
+            'email' => ['required', 'email', 'regex:/^[\w\.\-]+@([\w\-]+\.)+com$/i', 'exists:users,email', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/'],
         ];
     }
 }
