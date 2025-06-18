@@ -22,9 +22,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $data = $this->productService->index($request);
-//        dd($data);
         return view('index', compact('data'));
-
     }
 
     public function create()
