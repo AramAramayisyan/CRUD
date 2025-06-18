@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class ProductService
 {
@@ -11,6 +12,7 @@ class ProductService
     {
         $newProduct = new Product();
         $newProduct->fill([
+            'user_id' => Auth::id(),
             'type_id' => $request['type_id'],
             'name' => $request['name'],
             'description' => $request['description'],

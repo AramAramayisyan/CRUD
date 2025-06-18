@@ -4,6 +4,18 @@
 @section('content')
     <div class="container mt-5" style="max-width: 500px;">
         <h2 class="mb-4">Login</h2>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> Please fix the following errors:
+                <ul class="mb-0 mt-2">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegistrationController;
 
 Route::controller(LoginController::class)->group(function () {
     Route::get('/', 'showLoginForm')->name('loginPage');
+    Route::get('/login', 'showLoginForm');
     Route::post('/login', 'login')->name('login');
 });
 Route::controller(RegistrationController::class)->group(function () {
