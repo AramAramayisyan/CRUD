@@ -21,4 +21,9 @@ class Product extends Model
     {
         return $this->belongsTo(ProductType::class, 'type_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -19,7 +19,7 @@
             <div class="col-md-4">
                 <select name="type_id" class="form-control">
                     <option value="">-- Select Type --</option>
-                    @foreach($types as $type)
+                    @foreach($data['types'] as $type)
                         <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
                             {{ $type->name }}
                         </option>
@@ -31,7 +31,7 @@
             </div>
         </form>
 
-        @if($products->count())
+        @if($data['products']->count())
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -44,7 +44,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($products as $product)
+                @foreach($data['products'] as $product)
                     <tr class="{{ $product->is_featured ? 'table-featured' : '' }}">
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->name }}</td>

@@ -16,23 +16,15 @@ class ProductController extends Controller
 
     public function __construct(ProductService $productService)
     {
-        $this->productService = $productService;
+        return $this->productService = $productService;
     }
 
     public function index(Request $request)
     {
-        $query = Product::with('type');
-        $query->where('user_id', Auth::id());
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
-        if ($request->filled('type_id')) {
-            $query->where('type_id', $request->input('type_id'));
-        }
-        $products = $query->get();
-        $type_ids = Product::with('type')->pluck('type_id');
-        $types = ProductType::whereIn('id', $type_ids)->get();
-        return view('index', compact('products', 'types'));
+        $data = $this->productService->index($request);
+//        dd($data);
+        return view('index', compact('data'));
+
     }
 
     public function create()

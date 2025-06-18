@@ -4,10 +4,30 @@ namespace App\Services;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\ProductType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductService
 {
+    public function index(Request $request)
+    {
+        $query = Auth::user()->product()->with('type');
+        $query->where('user_id', Auth::id());
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+        if ($request->filled('type_id')) {
+            $query->where('type_id', $request->input('type_id'));
+        }
+        $products = $query->get();
+        $type_ids = Product::with('type')->pluck('type_id');
+        $types = ProductType::whereIn('id', $type_ids)->get();
+        return [
+            'products' => $products,
+            'types' => $types,
+        ];
+    }
     public function store($request)
     {
         $newProduct = new Product();
