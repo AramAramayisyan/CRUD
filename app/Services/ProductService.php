@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Collection;
 
 class ProductService
 {
@@ -58,7 +59,7 @@ class ProductService
         ]);
     }
 
-    public function is_featured($product)
+    public function is_featured($product): void
     {
         $product->is_featured = !$product->is_featured;
         $product->save();
@@ -69,12 +70,12 @@ class ProductService
         return Auth::user()->product()->onlyTrashed()->get();
     }
 
-    public function restoreTrashed($id)
+    public function restoreTrashed($id):void
     {
         Auth::user()->product()->onlyTrashed()->findOrFail($id)->restore();
     }
 
-    public function forceDelete($id)
+    public function forceDelete($id): void
     {
         Auth::user()->product()->onlyTrashed()->where('id', $id)->forceDelete();
     }

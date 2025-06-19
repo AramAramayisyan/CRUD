@@ -8,7 +8,7 @@
                     <div class="card-body text-center">
 
                         {{-- Avatar --}}
-                        <img src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : 'https://via.placeholder.com/150' }}"
+                        <img src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('storage/avatars/default/default.jpg') }}"
                              alt="{{ auth()->user()->name }}'s Avatar"
                              class="rounded-circle mb-3 border"
                              style="width: 150px; height: 150px; object-fit: cover;">
