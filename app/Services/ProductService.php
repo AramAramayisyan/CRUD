@@ -13,7 +13,6 @@ class ProductService
     public function index(Request $request)
     {
         $query = Auth::user()->product()->with('type');
-        $query->where('user_id', Auth::id());
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->input('name') . '%');
         }
@@ -21,8 +20,8 @@ class ProductService
             $query->where('type_id', $request->input('type_id'));
         }
         $products = $query->get();
-        $type_ids = Product::with('type')->pluck('type_id');
-        $types = ProductType::whereIn('id', $type_ids)->get();
+        $typeIds = $products->pluck('type_id');
+        $types = ProductType::whereIn('id', $typeIds)->get();
         return [
             'products' => $products,
             'types' => $types,
@@ -47,20 +46,36 @@ class ProductService
     {
         $product->update([
             'name' => $request->name,
-            'description' => $request->description,
-            'is_featured' => $request->feature
+            'description' => $request->description
         ]);
         return $product;
     }
 
     public function destroy($product)
     {
-        return $product->delete();
+        return $product->update([
+            'deleted_at' => now()
+        ]);
     }
 
     public function is_featured($product)
     {
         $product->is_featured = !$product->is_featured;
         $product->save();
+    }
+
+    public function trash()
+    {
+        return Auth::user()->product()->onlyTrashed()->get();
+    }
+
+    public function restoreTrashed($id)
+    {
+        Auth::user()->product()->onlyTrashed()->findOrFail($id)->restore();
+    }
+
+    public function forceDelete($id)
+    {
+        Auth::user()->product()->onlyTrashed()->where('id', $id)->forceDelete();
     }
 }

@@ -45,6 +45,11 @@
 <main>
     @yield('content')
 </main>
+<a href="{{ route('products.trash') }}" class="btn btn-danger btn-lg rounded-circle position-fixed d-flex align-items-center justify-content-center"
+   style="width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 1030;" title="View Trash">
+    🗑️
+</a>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

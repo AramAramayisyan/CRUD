@@ -17,8 +17,11 @@ Route::controller(RegistrationController::class)->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::patch('/products/{product}/toggleFeature', [ProductController::class, 'toggleFeature'])->name('products.toggleFeature');
+    Route::get('/trash', [ProductController::class, 'trash'])->name('products.trash');
+    Route::post( '/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
+    Route::delete('/forceDelete/{id}', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
     Route::controller(LoginController::class)->group(function () {
         Route::get('/user', 'showUserPage')->name('userPage');
-        Route::match(['get', 'post'], '/logout', 'logout')->name('logout');
+        Route::post('/logout', 'logout')->name('logout');
     });
 });

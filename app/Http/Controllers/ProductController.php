@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Http\Requests\SearchProductRequest;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Services\ProductService;
@@ -50,14 +49,31 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($this->productService->destroy($product)) {
-            return redirect('/products');
-        }
+        $product->delete();
+        return redirect()->route('products.index');
     }
 
     public function toggleFeature(Product $product)
     {
         $this->productService->is_featured($product);
         return redirect('/products');
+    }
+
+    public function trash()
+    {
+        $trashedProducts = $this->productService->trash();
+        return view('trash', compact('trashedProducts'));
+    }
+
+    public function restore($id)
+    {
+        $this->productService->restoreTrashed($id);
+        return Auth::user()->product()->onlyTrashed()->exists() ? redirect('/trash') : redirect('/products');
+    }
+
+    public function forceDelete($id)
+    {
+        $this->productService->forceDelete($id);
+        return Auth::user()->product()->onlyTrashed()->exists() ? redirect('/trash') : redirect('/products');
     }
 }
