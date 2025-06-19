@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\ProductType;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -12,18 +15,19 @@ class ProductController extends Controller
 
     public function __construct(ProductService $productService)
     {
-        $this->productService = $productService;
+        return $this->productService = $productService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('index', compact('products'));
+        $data = $this->productService->index($request);
+        return view('index', compact('data'));
     }
 
     public function create()
     {
-        return view('create');
+        $types = ProductType::all();
+        return view('create', compact('types'));
     }
 
     public function store(ProductRequest $request)
@@ -45,14 +49,31 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($this->productService->destroy($product)) {
-            return redirect('/products');
-        }
+        $product->delete();
+        return redirect()->route('products.index');
     }
 
     public function toggleFeature(Product $product)
     {
         $this->productService->is_featured($product);
         return redirect('/products');
+    }
+
+    public function trash()
+    {
+        $trashedProducts = $this->productService->trash();
+        return view('trash', compact('trashedProducts'));
+    }
+
+    public function restore($id)
+    {
+        $this->productService->restoreTrashed($id);
+        return Auth::user()->product()->onlyTrashed()->exists() ? redirect('/trash') : redirect('/products');
+    }
+
+    public function forceDelete($id)
+    {
+        $this->productService->forceDelete($id);
+        return Auth::user()->product()->onlyTrashed()->exists() ? redirect('/trash') : redirect('/products');
     }
 }

@@ -10,22 +10,45 @@
 
         <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Create New Product</a>
 
-        @if($products->count())
+        {{-- Search Form --}}
+        <form method="GET" action="{{ route('products.index') }}" class="row g-3 mb-4">
+            @csrf
+            <div class="col-md-4">
+                <input type="text" name="name" class="form-control" placeholder="Search by name" value="{{ request('name') }}">
+            </div>
+            <div class="col-md-4">
+                <select name="type_id" class="form-control">
+                    <option value="">-- Select Type --</option>
+                    @foreach($data['types'] as $type)
+                        <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
+                            {{ $type->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </div>
+        </form>
+
+        @if($data['products']->count())
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Project Name</th>
+                    <th>Type Name</th>
                     <th>Description</th>
                     <th>Feature</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($products as $product)
+                @foreach($data['products'] as $product)
                     <tr class="{{ $product->is_featured ? 'table-featured' : '' }}">
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->name }}</td>
+                        <td>{{ $product->type->name }}</td>
                         <td>{{ $product->description }}</td>
                         <td>
                             <form action="{{ route('products.toggleFeature', $product->id) }}" method="POST">
