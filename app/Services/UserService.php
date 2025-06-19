@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
-    public function updateProfile($request)
+    public function updateProfile($request) :bool
     {
         $user = Auth::user();
         $data = [
             'name' => $request->name,
-            'email' => $request->email,
+            'emails' => $request->email,
         ];
         if ($request->hasFile('avatar')) {
             $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
@@ -24,10 +24,12 @@ class UserService
         return $user->update($data);
     }
 
-    public function updatePassword($request)
+    public function updatePassword($request) :bool
     {
         if (Hash::check($request->old_password, Auth::user()->password)) {
-            return Auth::user()->update(['password' => $request->password]);
+            Auth::user()->update(['password' => $request->password]);
+            return true;
         }
+        return false;
     }
 }

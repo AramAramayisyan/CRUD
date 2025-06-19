@@ -5,6 +5,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\UserController;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/send-test-email', [UserController::class, 'sendTestEmail']);
 
 Route::controller(LoginController::class)->group(function () {
     Route::get('/', 'showLoginForm')->name('loginPage');

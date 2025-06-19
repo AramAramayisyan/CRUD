@@ -23,14 +23,14 @@
                 <label for="email" class="form-label">Email address</label>
                 <input
                     type="email"
-                    class="form-control @error('email') is-invalid @enderror"
+                    class="form-control @error('emails') is-invalid @enderror"
                     id="email"
                     name="email"
-                    value="{{ old('email') }}"
+                    value="{{ old('emails') }}"
                     required
                     autofocus
                 >
-                @error('email')
+                @error('emails')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

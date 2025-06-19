@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\editPassRequest;
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -30,6 +32,7 @@ class UserController extends Controller
         if ($this->userService->updateProfile($request)) {
             return redirect('profile/my');
         }
+        return view('auth.my_profile_edit');
     }
 
     public function editPassword(editPassRequest $request)
@@ -37,5 +40,16 @@ class UserController extends Controller
         if ($this->userService->updatePassword($request)) {
             return redirect('profile/my');
         }
+        return view('auth.my_password_edit');
+    }
+
+    public function sendTestEmail()
+    {
+        $details = [
+            'title' => 'Mail from Laravel',
+            'body' => 'This is a test mail using Mailtrap'
+        ];
+        Mail::to('receiver@example.com')->send(new TestMail($details));
+        return 'Mail Sent!';
     }
 }
