@@ -18,7 +18,7 @@ class RegistrationController extends Controller
     public function ShowRegistrationForm()
     {
         if (Auth::user()) {
-            return redirect('/user');
+            return redirect('profile/my');
         }
         return view('auth.register');
     }

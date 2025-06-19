@@ -18,7 +18,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::user()) {
-            return redirect('/user');
+            return redirect('profile/my');
         }
         return view('auth.login');
     }
@@ -27,16 +27,12 @@ class LoginController extends Controller
     {
         if (!Auth::user()) {
             if ($this->loginService->login($request)) {
-                return redirect('/user');
+                return redirect('profile/my');
             }
         }
-        return redirect('/user');
+        return redirect('profile/my');
     }
 
-    public function showUserPage()
-    {
-        return view('auth.user');
-    }
 
     public function logout()
     {
