@@ -25,7 +25,9 @@ class RegistrationController extends Controller
 
     public function register(RegistrationRequest $request)
     {
-        $newUser = $this->registrationService->register($request);
-        return redirect(route('userPage'));
+        if ($this->registrationService->register($request)) {
+            return redirect('profile/my');
+        }
+        return view('auth.register');
     }
 }

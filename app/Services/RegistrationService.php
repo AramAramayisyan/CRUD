@@ -15,12 +15,13 @@ class RegistrationService
         $newUser = new User();
         $newUser->fill([
             'name' => $request['name'],
-            'email' => $request['email'],
+            'emails' => $request['emails'],
             'password' => Hash::make($request['password']),
         ]);
         if ($newUser->save()) {
             event(new Registered($newUser));
             Auth::login($newUser);
+            return true;
         }
         return null;
     }
