@@ -7,13 +7,12 @@ use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use mysql_xdevapi\Collection;
 
 class ProductService
 {
     public function index(Request $request)
     {
-        $query = Auth::user()->product()->with('type');
+        $query = Auth::user()->products()->with('type');
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->input('name') . '%');
         }

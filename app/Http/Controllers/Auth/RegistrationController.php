@@ -15,7 +15,8 @@ class RegistrationController extends Controller
     {
         $this->registrationService = $registrationService;
     }
-    public function ShowRegistrationForm()
+
+    public function showRegistrationForm()
     {
         if (Auth::user()) {
             return redirect('profile/my');
@@ -25,6 +26,9 @@ class RegistrationController extends Controller
 
     public function register(RegistrationRequest $request)
     {
+        if (Auth::user()) {
+            return redirect('profile/my');
+        }
         if ($this->registrationService->register($request)) {
             return redirect('profile/my');
         }

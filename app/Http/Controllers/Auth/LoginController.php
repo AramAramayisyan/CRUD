@@ -25,18 +25,20 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        if (!Auth::user()) {
-            if ($this->loginService->login($request)) {
-                return redirect('profile/my');
-            }
+        if (Auth::user()) {
+           return redirect('profile/my');
         }
-        return redirect('profile/my');
+        if ($this->loginService->login($request)) {
+            return redirect('profile/my');
+        }
+        return view('auth.login');
     }
-
 
     public function logout()
     {
-        auth()->logout();
-        return redirect('/');
+        if (auth()->logout()) {
+            return redirect('/');
+        }
+        return redirect('profile/my');
     }
 }

@@ -12,8 +12,9 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
+        'role',
         'name',
-        'emails',
+        'email',
         'password',
         'avatar',
     ];
@@ -23,16 +24,25 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+//    protected function casts(): array
+//    {
+//        return [
+//            'email_verified_at' => 'datetime',
+////            'password' => 'hashed',
+//        ];
+//    }
 
-    public function product()
+    public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role == 'user';
+    }
+
+    public function isManager() {
+        return $this->role  == 'manager';
     }
 }

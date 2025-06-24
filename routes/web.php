@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\UserController;
-use App\Mail\TestMail;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\AdminController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/send-test-email', [UserController::class, 'sendTestEmail']);
 
@@ -29,6 +28,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit', 'editProfile')->name('profile.edit');
         Route::put('/update', 'updateProfile')->name('profile.update');
         Route::put('/edit-password', 'editPassword')->name('profile.editPassword');
+        Route::delete('/delete', 'deleteProfile')->name('profile.delete');
     });
 
     Route::resource('products', ProductController::class);
@@ -36,4 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/trash', [ProductController::class, 'trash'])->name('products.trash');
     Route::post( '/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
     Route::delete('/forceDelete/{id}', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index']);
+});
+
+Route::middleware(['auth', 'role:manager'])->group(function () {
+
 });

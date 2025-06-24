@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\editPassRequest;
 use App\Http\Requests\UserRequest;
-use App\Services\UserService;
 use App\Mail\TestMail;
+use App\Services\UserService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -40,7 +43,7 @@ class UserController extends Controller
         if ($this->userService->updatePassword($request)) {
             return redirect('profile/my');
         }
-        return view('auth.my_password_edit');
+        return view('auth.my_profile_edit');
     }
 
     public function sendTestEmail()
@@ -51,5 +54,17 @@ class UserController extends Controller
         ];
         Mail::to('receiver@example.com')->send(new TestMail($details));
         return 'Mail Sent!';
+    }
+
+    public function deleteProfile(Request $request)
+    {
+        $user = Auth::user();
+        $avatar = $user->avatar;
+        Auth::logout();
+        if ($user->forceDelete() && $avatar && $avatar != 'avatars/default/default.jpg') {
+            Storage::disk('public')->delete($avatar);
+        }
+
+        return view('auth.login');
     }
 }

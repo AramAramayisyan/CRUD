@@ -13,7 +13,7 @@ class UserService
         $user = Auth::user();
         $data = [
             'name' => $request->name,
-            'emails' => $request->email,
+            'email' => $request->email,
         ];
         if ($request->hasFile('avatar')) {
             $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
