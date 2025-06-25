@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+// use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -24,25 +24,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-//    protected function casts(): array
-//    {
-//        return [
-//            'email_verified_at' => 'datetime',
-////            'password' => 'hashed',
-//        ];
-//    }
-
     public function products()
     {
         return $this->hasMany(Product::class);
     }
 
-    public function isAdmin()
+    public function productsWithTypes()
     {
-        return $this->role == 'user';
+        return $this->hasMany(Product::class)->with('type');
     }
 
-    public function isManager() {
-        return $this->role  == 'manager';
+    public function hasRole($roles)
+    {
+        if (is_array($roles) && in_array($this->role, $roles)) {
+            return true;
+        }
+        return $this->role === $roles;
     }
 }

@@ -58,7 +58,9 @@
                             </form>
                         </td>
                         <td>
-                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            @if(auth()->id() == $product->user_id)
+                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            @endif
 
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline-block;">
                                 @csrf

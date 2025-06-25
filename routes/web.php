@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/update', 'updateProfile')->name('profile.update');
         Route::put('/edit-password', 'editPassword')->name('profile.editPassword');
         Route::delete('/delete', 'deleteProfile')->name('profile.delete');
+        Route::get('products/{user}', 'products')->name('profile.products');
     });
 
     Route::resource('products', ProductController::class);
@@ -36,12 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/trash', [ProductController::class, 'trash'])->name('products.trash');
     Route::post( '/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
     Route::delete('/forceDelete/{id}', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
-});
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
-});
-
-Route::middleware(['auth', 'role:manager'])->group(function () {
-
+    Route::get('userShow/{id}', [UserController::class, 'show'])->name('users.show');
 });

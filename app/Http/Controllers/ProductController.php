@@ -49,6 +49,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->productService->destroy($product);
         $product->delete();
         return redirect()->route('products.index');
     }
@@ -56,7 +57,10 @@ class ProductController extends Controller
     public function toggleFeature(Product $product)
     {
         $this->productService->is_featured($product);
-        return redirect('/products');
+        if (Auth::id() == $product->user_id) {
+            return redirect('/products');
+        }
+        return back();
     }
 
     public function trash()
@@ -68,12 +72,12 @@ class ProductController extends Controller
     public function restore($id)
     {
         $this->productService->restoreTrashed($id);
-        return Auth::user()->product()->onlyTrashed()->exists() ? redirect('/trash') : redirect('/products');
+        return Auth::user()->products()->onlyTrashed()->exists() ? redirect('/trash') : redirect('/products');
     }
 
     public function forceDelete($id)
     {
         $this->productService->forceDelete($id);
-        return Auth::user()->product()->onlyTrashed()->exists() ? redirect('/trash') : redirect('/products');
+        return Auth::user()->products()->onlyTrashed()->exists() ? redirect('/trash') : redirect('/products');
     }
 }

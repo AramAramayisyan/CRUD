@@ -19,6 +19,7 @@ class RegistrationService
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
+            'role' => 'user', // Default role for new users
         ]);
         if ($newUser->save()) {
             event(new Registered($newUser));

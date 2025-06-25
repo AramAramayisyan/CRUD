@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -31,5 +32,11 @@ class UserService
             return true;
         }
         return false;
+    }
+
+    public function show($id)
+    {
+        $user = new User();
+        return $user->where('id', '=', $id)->first();
     }
 }

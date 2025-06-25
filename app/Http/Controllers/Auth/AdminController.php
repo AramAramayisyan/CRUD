@@ -11,13 +11,17 @@ class AdminController extends Controller
 {
     private $adminService;
 
-    public function __construct(LoginService $adminService)
+    public function __construct()
     {
-        $this->$adminService = $adminService;
+
     }
 
     public function index()
     {
-        dd('aaa');
+//        $user = Auth::user();
+//        if ($user->role == 'manager') {
+//
+//        }
+
     }
 }

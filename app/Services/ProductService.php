@@ -3,10 +3,13 @@
 namespace App\Services;
 
 use App\Http\Requests\ProductRequest;
+use App\Mail\TestMail;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ProductService
 {
@@ -53,9 +56,18 @@ class ProductService
 
     public function destroy($product)
     {
-        return $product->update([
-            'deleted_at' => now()
-        ]);
+        if (\auth()->id() == $product->user_id) {
+            return $product->update([
+                'deleted_at' => now()
+            ]);
+        } else {
+            $user = User::where('id', $product->user_id)->first();
+            $userEmail = $user->email;
+            $userName = $user->name;
+            Mail::to($userEmail)->queue(new TestMail($userName));
+            dd('aa');
+            return Product::where('id', $product->id)->forceDelete();
+        }
     }
 
     public function is_featured($product): void
@@ -66,16 +78,16 @@ class ProductService
 
     public function trash()
     {
-        return Auth::user()->product()->onlyTrashed()->get();
+        return Auth::user()->products()->onlyTrashed()->get();
     }
 
     public function restoreTrashed($id):void
     {
-        Auth::user()->product()->onlyTrashed()->findOrFail($id)->restore();
+        Auth::user()->products()->onlyTrashed()->findOrFail($id)->restore();
     }
 
     public function forceDelete($id): void
     {
-        Auth::user()->product()->onlyTrashed()->where('id', $id)->forceDelete();
+        Auth::user()->products()->onlyTrashed()->where('id', $id)->forceDelete();
     }
 }
