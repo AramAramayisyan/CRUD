@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 
 class RegistrationService
 {
-    public function register(RegistrationRequest $request)
+    public function register(RegistrationRequest $request) : bool //register
     {
         $newUser = new User();
         $newUser->fill([
@@ -27,6 +27,6 @@ class RegistrationService
             Mail::to($request->email)->queue(new TestMail($request->name));
             return true;
         }
-        return null;
+        return false;
     }
 }

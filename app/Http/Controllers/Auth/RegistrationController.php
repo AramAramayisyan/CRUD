@@ -16,22 +16,27 @@ class RegistrationController extends Controller
         $this->registrationService = $registrationService;
     }
 
-    public function showRegistrationForm()
+    public function showRegistrationForm() : object // show registration form
     {
         if (Auth::user()) {
+
             return redirect('profile/my');
         }
-        return view('auth.register');
+
+        return redirect('registration');
     }
 
-    public function register(RegistrationRequest $request)
+    public function register(RegistrationRequest $request) : object // register new user
     {
         if (Auth::user()) {
+
             return redirect('profile/my');
         }
         if ($this->registrationService->register($request)) {
+
             return redirect('profile/my');
         }
-        return view('auth.register');
+
+        return redirect('registration');
     }
 }

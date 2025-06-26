@@ -20,11 +20,36 @@
 
                         <hr class="my-4">
 
+                        @if(Auth::user()->role === 'admin')
+                            <form action="{{ route('users.updateRole', $user->id) }}" method="POST" class="mb-4">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="mb-3 text-start">
+                                    <label class="fw-bold mb-2 d-block">Change Role</label>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="role" id="roleUser" value="user"
+                                               {{ $user->role === 'user' ? 'checked' : '' }} required>
+                                        <label class="form-check-label" for="roleUser">User</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="role" id="roleManager" value="manager"
+                                            {{ $user->role === 'manager' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="roleManager">Manager</label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success">Update Role</button>
+                            </form>
+                        @endif
+
                         <a href="{{ route('profile.products', $user->id) }}" class="btn btn-outline-primary mb-2">
                             Product
                         </a>
 
-                        <form action="{{ route('profile.delete') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete the user account?');">
+                        <form action="{{ route('profile.delete', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete the user account?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">

@@ -24,7 +24,7 @@
                             change
                         </a>
 
-                        <form action="{{ route('profile.delete') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete the user account?');">
+                        <form action="{{ route('profile.delete', auth()->user()->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete the user account?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">

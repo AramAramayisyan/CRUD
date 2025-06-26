@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
 use App\Services\LoginService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -16,12 +18,10 @@ class AdminController extends Controller
 
     }
 
-    public function index()
+    public function updateUserRole(Request $request, $id) : object //update user role
     {
-//        $user = Auth::user();
-//        if ($user->role == 'manager') {
-//
-//        }
-
+        $user = User::find($id);
+        $user->update(['role' => $request['role']]);
+        return back();
     }
 }

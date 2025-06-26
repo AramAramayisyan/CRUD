@@ -5,12 +5,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class editPassRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize() : bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'old_password' => ['required', 'string', 'min:8', 'max:255', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/'],

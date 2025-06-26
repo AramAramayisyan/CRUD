@@ -28,9 +28,9 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email Address</label>
                                 <input type="email" name="email" id="email"
-                                       value="{{ old('emails', auth()->user()->email) }}"
-                                       class="form-control @error('emails') is-invalid @enderror">
-                                @error('emails')
+                                       value="{{ old('mails', auth()->user()->email) }}"
+                                       class="form-control @error('mails') is-invalid @enderror">
+                                @error('mails')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

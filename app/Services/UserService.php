@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
-    public function updateProfile($request) :bool
+    public function updateProfile($request) :bool // update profile
     {
         $user = Auth::user();
         $data = [
@@ -25,7 +25,7 @@ class UserService
         return $user->update($data);
     }
 
-    public function updatePassword($request) :bool
+    public function updatePassword($request) :bool // update password
     {
         if (Hash::check($request->old_password, Auth::user()->password)) {
             Auth::user()->update(['password' => $request->password]);
@@ -34,9 +34,11 @@ class UserService
         return false;
     }
 
-    public function show($id)
+    public function deleteUserAndAvatar(User $user) : void // delete user and avatar
     {
-        $user = new User();
-        return $user->where('id', '=', $id)->first();
+        $avatar = $user->avatar;
+        if ($user->forceDelete() && $avatar && $avatar !== 'avatars/default/default.jpg') {
+            Storage::disk('public')->delete($avatar);
+        }
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\ProductRequest;
-use App\Mail\TestMail;
+use App\Mail\IsAdminMail;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\ProductType;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Mail;
 
 class ProductService
 {
-    public function index(Request $request)
+    public function index(Request $request) : array // show all user products
     {
         $query = Auth::user()->products()->with('type');
         if ($request->filled('name')) {
@@ -25,12 +25,13 @@ class ProductService
         $products = $query->get();
         $typeIds = $products->pluck('type_id');
         $types = ProductType::whereIn('id', $typeIds)->get();
+
         return [
             'products' => $products,
             'types' => $types,
         ];
     }
-    public function store($request)
+    public function store($request) : ?Product // create new product
     {
         $newProduct = new Product();
         $newProduct->fill([
@@ -42,51 +43,55 @@ class ProductService
         if ($newProduct->save()) {
             return $newProduct;
         }
+
         return null;
     }
 
-    public function update(ProductRequest $request, $product)
+    public function update(ProductRequest $request, $product) : ?Product // update product
     {
         $product->update([
             'name' => $request->name,
             'description' => $request->description
         ]);
+
         return $product;
     }
 
-    public function destroy($product)
+    public function destroy($product) // delete product
     {
         if (\auth()->id() == $product->user_id) {
             return $product->update([
                 'deleted_at' => now()
             ]);
-        } else {
-            $user = User::where('id', $product->user_id)->first();
-            $userEmail = $user->email;
-            $userName = $user->name;
-            Mail::to($userEmail)->queue(new TestMail($userName));
-            dd('aa');
+        }
+        $user = User::find($product->user_id);
+        if ($user) {
+            $data['name'] = $user->name;
+            $data['productName'] = $product->name;
+            Mail::to($user->email)->queue(new IsAdminMail($data));
+
             return Product::where('id', $product->id)->forceDelete();
         }
     }
 
-    public function is_featured($product): void
+
+    public function is_featured($product) : void // toggle feature
     {
         $product->is_featured = !$product->is_featured;
         $product->save();
     }
 
-    public function trash()
+    public function trash() : array // show trashed products
     {
         return Auth::user()->products()->onlyTrashed()->get();
     }
 
-    public function restoreTrashed($id):void
+    public function restoreTrashed($id) : void // restore trashed product
     {
         Auth::user()->products()->onlyTrashed()->findOrFail($id)->restore();
     }
 
-    public function forceDelete($id): void
+    public function forceDelete($id) : void // delete trashed product
     {
         Auth::user()->products()->onlyTrashed()->where('id', $id)->forceDelete();
     }

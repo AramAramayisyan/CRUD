@@ -5,12 +5,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize() : bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules() : array
     {
         return [
             'email' => ['required', 'email', 'regex:/^[\w\.\-]+@([\w\-]+\.)+(com|ru)$/i', 'max:255', 'exists:users,email'],

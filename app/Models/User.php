@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -24,17 +24,17 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function products()
+    public function products() : HasMany // get products
     {
         return $this->hasMany(Product::class);
     }
 
-    public function productsWithTypes()
+    public function productsWithTypes() : HasMany // get products with types
     {
         return $this->hasMany(Product::class)->with('type');
     }
 
-    public function hasRole($roles)
+    public function hasRole($roles) : bool // check user role
     {
         if (is_array($roles) && in_array($this->role, $roles)) {
             return true;
