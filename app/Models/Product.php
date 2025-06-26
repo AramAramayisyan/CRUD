@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
@@ -20,12 +21,12 @@ class Product extends Model
         'is_featured',
     ];
 
-    public function type()
+    public function type() : BelongsTo // product type
     {
         return $this->belongsTo(ProductType::class, 'type_id');
     }
 
-    public function user()
+    public function user() : BelongsTo // user
     {
         return $this->belongsTo(User::class);
     }

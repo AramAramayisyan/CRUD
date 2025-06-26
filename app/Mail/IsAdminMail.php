@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TestMail extends Mailable implements ShouldQueue
+class IsAdminMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -20,6 +20,6 @@ class TestMail extends Mailable implements ShouldQueue
 
     public function build() : Mailable
     {
-        return $this->view('mails.test')->with(['request' => $this->request]);
+        return $this->view('mails.isAdmin')->with(['request' => $this->request]);
     }
 }
