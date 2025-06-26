@@ -10,6 +10,7 @@ use App\Models\ProductType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
 {
@@ -59,7 +60,7 @@ class ProductService
 
     public function destroy($product) // delete product
     {
-        if (\auth()->id() == $product->user_id) {
+        if (Auth::id() == $product->user_id) {
             return $product->update([
                 'deleted_at' => now()
             ]);
@@ -67,11 +68,12 @@ class ProductService
         $user = User::find($product->user_id);
         if ($user) {
             $data['name'] = $user->name;
+            $data['nameFrom'] = Auth::user()->name;
             $data['productName'] = $product->name;
             Mail::to($user->email)->queue(new IsAdminMail($data));
-
             return Product::where('id', $product->id)->forceDelete();
         }
+        return null;
     }
 
 
@@ -81,7 +83,7 @@ class ProductService
         $product->save();
     }
 
-    public function trash() : array // show trashed products
+    public function trash(): Collection // show trashed products
     {
         return Auth::user()->products()->onlyTrashed()->get();
     }

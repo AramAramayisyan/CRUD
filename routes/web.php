@@ -19,7 +19,7 @@ Route::controller(RegistrationController::class)->group(function() {
 
 Route::middleware('auth')->group(function() {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    
+
     Route::prefix('profile')->controller(UserController::class)->group(function() {
         Route::get('/my', 'myProfile')->name('profile.my');
         Route::match(['get', 'put'], '/edit', 'editProfile')->name('profile.edit');
@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function() {
         Route::get('products/{user}', 'products')->name('profile.products');
     });
 
-    Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class)->except(['show']);
     Route::prefix('products')->group(function() {
         Route::patch('{product}/toggleFeature', [ProductController::class, 'toggleFeature'])->name('products.toggleFeature');
         Route::post('restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
@@ -40,6 +40,6 @@ Route::middleware('auth')->group(function() {
     Route::prefix('admin')->group(function() {
         Route::get('/', [AdminController::class, 'index']);
         Route::get('userShow/{id}', [UserController::class, 'show'])->name('users.show');
-        Route::put('updateRole{id}', 'App\Http\Controllers\Auth\AdminController@updateUserRole')->name('users.updateRole');
+        Route::put('updateRole/{user}', [AdminController::class, 'updateUserRole'])->name('users.updateRole');
     });
 });

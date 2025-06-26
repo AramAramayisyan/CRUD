@@ -2,3 +2,60 @@
     text-decoration: line-through;
     color: gray;
 }
+
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar-custom {
+    background: linear-gradient(to right, #0d6efd, #6610f2);
+}
+
+.navbar-brand,
+.nav-link,
+.dropdown-item {
+    color: #ffffff !important;
+}
+
+.dropdown-menu {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #f1f1f1;
+    color: #212529 !important;
+}
+
+.dropdown-menu .dropdown-item.active,
+.dropdown-menu .dropdown-item:active {
+    background-color: #0d6efd;
+    color: #fff !important;
+}
+
+.rounded-avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+}
+
+.floating-trash {
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1030;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #5a9bd4 !important;
+    box-shadow: 0 0 8px rgba(90, 155, 212, 0.5) !important;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+

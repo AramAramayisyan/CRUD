@@ -18,9 +18,8 @@ class AdminController extends Controller
 
     }
 
-    public function updateUserRole(Request $request, $id) : object //update user role
+    public function updateUserRole(Request $request, User $user) : object //update user role
     {
-        $user = User::find($id);
         $user->update(['role' => $request['role']]);
         return back();
     }

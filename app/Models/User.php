@@ -41,4 +41,24 @@ class User extends Authenticatable
         }
         return $this->role === $roles;
     }
+
+    /**
+     * Check if the user has admin role
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isManager(): bool
+    {
+        return $this->role === 'manager';
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
 }

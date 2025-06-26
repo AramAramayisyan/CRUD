@@ -23,7 +23,7 @@ class RegistrationController extends Controller
             return redirect('profile/my');
         }
 
-        return redirect('registration');
+        return view('auth.register');
     }
 
     public function register(RegistrationRequest $request) : object // register new user
@@ -37,6 +37,6 @@ class RegistrationController extends Controller
             return redirect('profile/my');
         }
 
-        return redirect('registration');
+        return view('auth.register');
     }
 }

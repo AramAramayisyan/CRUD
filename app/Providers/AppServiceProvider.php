@@ -12,7 +12,23 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('layouts.app', function ($view) {
-            $view->with('users', User::all()->where('id', '!=', \auth()->id())->where('role', '!=', 'admin'));
+            $authUser = auth()->user();
+            if (!$authUser) {
+                return null;
+            }
+            if ($authUser->isAdmin()) {
+                $users = User::where('id', '!=', $authUser->id)
+                    ->where('role', '!=', 'admin')
+                    ->get();
+            } elseif ($authUser->isManager()) {
+                $users = User::where('id', '!=', $authUser->id)
+                    ->where('role', 'user')
+                    ->get();
+            } else {
+                $users = collect();
+            }
+            $view->with('users', $users);
         });
     }
+
 }
