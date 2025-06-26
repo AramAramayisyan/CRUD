@@ -43,3 +43,10 @@ Route::middleware('auth')->group(function() {
         Route::put('updateRole/{user}', [AdminController::class, 'updateUserRole'])->name('users.updateRole');
     });
 });
+
+Route::get('/lang/{lang}', function ($lang) {
+    if (in_array($lang, ['en', 'hy'])) {
+        session(['locale' => $lang]);
+    }
+    return redirect()->back();
+})->name('lang.switch');
