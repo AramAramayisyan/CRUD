@@ -18,7 +18,7 @@
             @csrf
 
             <div class="mb-4">
-                <label for="name" class="form-label fw-bold" style="color: #34495e;">Project Name</label>
+                <label for="name" class="form-label fw-bold" style="color: #34495e;">{{__('products.name')}}</label>
                 <input
                     type="text"
                     name="name"
@@ -26,7 +26,7 @@
                     class="form-control form-control-lg @error('name') is-invalid @enderror"
                     value="{{ old('name') }}"
                     required
-                    placeholder="Enter project name"
+                    placeholder="{{__('products.name_placeholder')}}"
                     style="border-radius: 8px; border: 1.5px solid #ced4da; transition: border-color 0.3s ease;"
                 >
                 @error('name')
@@ -43,7 +43,7 @@
                     required
                     style="border-radius: 8px; border: 1.5px solid #ced4da; transition: border-color 0.3s ease;"
                 >
-                    <option value="" disabled {{ old('type_id') ? '' : 'selected' }}>Select type</option>
+                    <option value="" disabled {{ old('type_id') ? '' : 'selected' }}>{{__('products.select_by_type')}}</option>
                     @foreach ($types as $type)
                         <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>
                             {{ $type->name }}
@@ -56,13 +56,13 @@
             </div>
 
             <div class="mb-5">
-                <label for="description" class="form-label fw-bold" style="color: #34495e;">Description</label>
+                <label for="description" class="form-label fw-bold" style="color: #34495e;">{{__('products.description')}}</label>
                 <textarea
                     name="description"
                     id="description"
                     class="form-control form-control-lg @error('description') is-invalid @enderror"
                     rows="4"
-                    placeholder="Enter project description"
+                    placeholder="{{__('products.description_placeholder')}}"
                     style="border-radius: 8px; border: 1.5px solid #ced4da; transition: border-color 0.3s ease;"
                 >{{ old('description') }}</textarea>
                 @error('description')
@@ -72,10 +72,10 @@
 
             <div class="d-flex justify-content-between">
                 <a href="{{ route('products.index') }}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill" style="font-weight: 600; letter-spacing: 0.03em;">
-                    Cancel
+                    {{__('products.cancel')}}
                 </a>
                 <button type="submit" class="btn btn-primary btn-lg px-4 rounded-pill" style="font-weight: 600; letter-spacing: 0.03em;">
-                    Create
+                    {{__('products.create')}}
                 </button>
             </div>
         </form>

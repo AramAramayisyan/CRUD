@@ -59,3 +59,14 @@ body {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.dropdown-menu.show .dropdown-item {
+    color: #000 !important;
+    background-color: transparent !important;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background-color: #f1f1f1 !important;
+    color: #000 !important;
+}
+

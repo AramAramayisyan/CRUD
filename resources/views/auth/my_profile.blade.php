@@ -17,7 +17,7 @@
                         <h4 class="card-title mb-1 fw-bold">{{ auth()->user()->name }}</h4>
                         <p class="text-muted mb-1">{{ auth()->user()->email }}</p>
                         <p class="text-secondary small mb-4">
-                            Registered on <strong>{{ auth()->user()->created_at->format('F d, Y') }}</strong>
+                            {{__('profile.registered')}} <strong>{{ auth()->user()->created_at->format('F d, Y') }}</strong>
                         </p>
 
                         <hr class="my-4">
@@ -25,7 +25,7 @@
                         {{-- Profile Actions --}}
                         <div class="d-grid gap-2">
                             <a href="{{ route('profile.edit') }}" class="btn btn-outline-primary">
-                                Edit Profile
+                                {{__('profile.edit')}}
                             </a>
 
                             <form action="{{ route('profile.delete', auth()->user()->id) }}"
@@ -34,7 +34,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">
-                                    Delete Account
+                                    {{__('profile.delete')}}
                                 </button>
                             </form>
                         </div>
