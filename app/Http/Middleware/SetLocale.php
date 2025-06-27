@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -9,8 +10,17 @@ class SetLocale
 {
     public function handle($request, Closure $next)
     {
-        $locale = Session::get('locale', config('app.locale'));
+        $locale = $request->session()->get('locale', config('app.locale'));
         App::setLocale($locale);
+
+        $fallbackLocale = config('app.fallback_locale', 'en');
+        App::setFallbackLocale($fallbackLocale);
+
+        setlocale(LC_TIME, $locale);
+
+        if (function_exists('setlocale')) {
+            setlocale(LC_ALL, $locale . '.UTF-8');
+        }
 
         return $next($request);
     }

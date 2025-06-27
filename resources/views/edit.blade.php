@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container" style="max-width: 600px; margin-top: 40px;">
-        <h2 class="mb-4 text-primary">Edit Project</h2>
+        <h2 class="mb-4 text-primary">{{__('products.edit')}}</h2>
 
         @if ($errors->any())
             <div class="alert alert-danger rounded-3 shadow-sm">
@@ -19,7 +19,7 @@
             @method('PUT')
 
             <div class="mb-4">
-                <label for="name" class="form-label fw-semibold">Project Name</label>
+                <label for="name" class="form-label fw-semibold">{{__('products.name')}}</label>
                 <input
                     type="text"
                     name="name"
@@ -27,24 +27,24 @@
                     class="form-control form-control-lg"
                     value="{{ old('name', $product->name) }}"
                     required
-                    placeholder="Enter project name"
+                    placeholder="{{__('products.name_placeholder')}}"
                 >
             </div>
 
             <div class="mb-4">
-                <label for="description" class="form-label fw-semibold">Description</label>
+                <label for="description" class="form-label fw-semibold">{{__('products.description')}}</label>
                 <textarea
                     name="description"
                     id="description"
                     class="form-control"
                     rows="5"
-                    placeholder="Describe the project"
+                    placeholder="{{__('products.description_placeholder')}}"
                 >{{ old('description', $product->description) }}</textarea>
             </div>
 
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary px-4">Update</button>
-                <a href="{{ route('products.index') }}" class="btn btn-outline-secondary px-4">Cancel</a>
+                <button type="submit" class="btn btn-primary px-4">{{__('products.update')}}</button>
+                <a href="{{ route('products.index') }}" class="btn btn-outline-secondary px-4">{{__('products.cancel')}}</a>
             </div>
         </form>
     </div>

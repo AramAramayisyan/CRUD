@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\{LoginController, RegistrationController, UserController, AdminController};
 use App\Http\Controllers\ProductController;
@@ -44,9 +45,12 @@ Route::middleware('auth')->group(function() {
     });
 });
 
-Route::get('/lang/{lang}', function ($lang) {
-    if (in_array($lang, ['en', 'hy'])) {
-        session(['locale' => $lang]);
+Route::get('/language/{locale}', function (string $locale) {
+    if (!in_array($locale, ['en', 'hy'])) {
+        abort(400);
     }
+    session(['locale' => $locale]);
+    app()->setLocale($locale);
+
     return redirect()->back();
 })->name('lang.switch');

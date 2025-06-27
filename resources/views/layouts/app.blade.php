@@ -25,7 +25,7 @@
                     <div class="dropdown me-3">
                         <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                            Select a user
+                            👤 {{ __('app.select_user') }}
                         </button>
                         @if($users)
                             <ul class="dropdown-menu" aria-labelledby="userDropdown" style="min-width: 280px;">
@@ -52,19 +52,21 @@
 
                 <!-- Language Switcher Dropdown -->
                 <li class="nav-item dropdown me-3">
-                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false" title="Select Language" style="cursor:pointer;">
-                        🌐
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="languageDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false" title="{{ __('app.select_language') }}" style="cursor:pointer;">
+                        🌐 <span class="ms-1 d-none d-sm-inline">{{ strtoupper(app()->getLocale()) }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
                         <li>
-                            <a class="dropdown-item" href="{{ route('lang.switch', 'en') }}">
-                                English
+                            <a class="dropdown-item {{ app()->getLocale() === 'en' ? 'active' : '' }}"
+                               href="{{ route('lang.switch', 'en') }}">
+                                {{ __('app.english') }}
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('lang.switch', 'hy') }}">
-                                Հայերեն
+                            <a class="dropdown-item {{ app()->getLocale() === 'hy' ? 'active' : '' }}"
+                               href="{{ route('lang.switch', 'hy') }}">
+                                {{ __('app.armenian') }}
                             </a>
                         </li>
                     </ul>
@@ -72,7 +74,7 @@
 
                 @auth
                     <li class="nav-item me-3">
-                        <a class="nav-link fw-semibold" href="{{ route('products.index') }}">📦 Products</a>
+                        <a class="nav-link fw-semibold" href="{{ route('products.index') }}">📦 {{ __('app.products') }}</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -90,22 +92,22 @@
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item" href="{{ route('profile.my') }}">👤 My Profile</a>
+                                <a class="dropdown-item" href="{{ route('profile.my') }}">👤 {{ __('app.profile') }}</a>
                             </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button class="dropdown-item text-danger" type="submit">🚪 Logout</button>
+                                    <button class="dropdown-item text-danger" type="submit">🚪 {{ __('app.logout') }}</button>
                                 </form>
                             </li>
                         </ul>
                     </li>
                 @else
                     <li class="nav-item me-3">
-                        <a class="nav-link fw-semibold" href="{{ route('loginPage') }}">🔐 Login</a>
+                        <a class="nav-link fw-semibold" href="{{ route('loginPage') }}">🔐 {{__('app.login')}}</a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link fw-semibold" href="{{ route('registration') }}">📝 Register</a>
+                        <a class="nav-link fw-semibold" href="{{ route('registration') }}">📝 {{__('app.register')}}</a>
                     </li>
                 @endauth
             </ul>
